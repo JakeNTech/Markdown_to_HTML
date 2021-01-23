@@ -1,8 +1,10 @@
 //V2
+//JakeNTech - 2021
 //Function to call from HTML. Loads the file and passes it to HTML_Formatter.
 function markdown(file_url){
     if(file_url.split('.').pop()!="md"){
         console.log("Bad Extension!");
+        document.getElementById("markdown_contents").innerHTML = "<p>Bad File Requested!</p>"
         return;
     }
     fetch(file_url)
@@ -21,25 +23,25 @@ function HTML_Format(text){
     //console.log(text.split(/\r?\n/));
     var text = text.split(/\r?\n/);
     var i = 0;
-    var codeblock_no = 0;
     var image_id = 0;
     while(i < text.length){
         // console.log(i)
         // Deal with headings
         if(text[i].includes("#")){
+            document.getElementById("markdown_contents").innerHTML += "<div id='header'> </div>"
             if(text[i].split(" ")[0]==="#"){
-                document.getElementById("markdown_contents").innerHTML += "<h1>"+text[i].replace("#","")+"</h1>"
+                document.getElementById("header").innerHTML += `<h1>`+text[i].replace("#","")+`</h1>`
             }   
             if(text[i].split(" ")[0]==="##"){
-                document.getElementById("markdown_contents").innerHTML += "<h2>"+text[i].replace("##","")+"</h2>"
+                document.getElementById("header").innerHTML += `<p>`+text[i].replace("##","")+`</p>`
             }
             if(text[i].split(" ")[0]==="###"){
-                document.getElementById("markdown_contents").innerHTML += "<h3>"+text[i].replace("###","")+"</h3>"
+                document.getElementById("header").innerHTML += `<h5>`+text[i].replace("###","")+`</h5>`
             }
         }
         // Deal with code blocks
         else if (text[i].includes("```")){
-            i++;
+            i++
             document.getElementById("markdown_contents").innerHTML += `<div class='code_block' id='`+codeblock_no+`'> </div>`
             while(text[i]!=="```"){
                 if(text[i]==="```"){
@@ -70,9 +72,9 @@ function HTML_Format(text){
         else if(text[i].startsWith("*")){
             document.getElementById("markdown_contents").innerHTML += `<p><i>`+text[i].replace(/\*/g,"")+`<i></p>`;
         }
-        // Deal with text
+            // Deal with text
         else{
-            document.getElementById("markdown_contents").innerHTML += "<p>"+text[i].replace("\\","")+"</p>";
+            document.getElementById("markdown_contents").innerHTML += `<p>`+text[i].replace("\\","")+`</p>`;
         }
         i++
     }
