@@ -1,4 +1,4 @@
-//V2
+//V2.1
 //JakeNTech - 2021
 //Function to call from HTML. Loads the file and passes it to HTML_Formatter.
 function markdown(file_url){
@@ -71,6 +71,9 @@ function HTML_Format(text){
         }
         else if(text[i].startsWith("*")){
             document.getElementById("markdown_contents").innerHTML += `<p><i>`+text[i].replace(/\*/g,"")+`<i></p>`;
+        }
+        else if(text[i].startsWith("[")){
+            document.getElementById("markdown_contents").innerHTML+= "<a id='link' href='"+text[i].split("]")[1].replace(/\((.*)\)/, "$1")+"'>"+text[i].split("]")[0].replace(/\[/, "")+"</a>"
         }
             // Deal with text
         else{

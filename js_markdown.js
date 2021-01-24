@@ -70,6 +70,9 @@ function HTML_Format(text){
         else if(text[i].startsWith("*")){
             document.getElementById("markdown_contents").innerHTML += `<p><i>`+text[i].replace(/\*/g,"")+`<i></p>`;
         }
+        else if(text[i].startsWith("[")){
+            document.getElementById("markdown_contents").innerHTML+= "<a id='link' href='"+text[i].split("]")[1].replace(/\((.*)\)/, "$1")+"'>"+text[i].split("]")[0].replace(/\[/, "")+"</a>"
+        }
         // Deal with text
         else{
             document.getElementById("markdown_contents").innerHTML += "<p>"+text[i].replace("\\","")+"</p>";
